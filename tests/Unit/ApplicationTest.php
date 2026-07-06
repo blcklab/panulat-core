@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Panulat\Tests\Unit;
 
-use Panulat\Container\Container;
 use Panulat\Foundation\Application;
-use Panulat\Foundation\ServiceProviderInterface;
 use Panulat\Http\Request;
 use Panulat\Http\Response;
 use PHPUnit\Framework\TestCase;
@@ -20,16 +18,7 @@ final class ApplicationTest extends TestCase
 
         try {
             $app = new Application($basePath, ignoreCaches: true);
-            $app->register(new class implements ServiceProviderInterface {
-                public function register(Container $container): void
-                {
-                }
-
-                public function boot(Application $app): void
-                {
-                    $app->router()->get('/fresh', [FreshController::class, 'show']);
-                }
-            });
+            $app->router()->get('/fresh', [FreshController::class, 'show']);
 
             $request = Request::fromServer([
                 'REQUEST_METHOD' => 'GET',

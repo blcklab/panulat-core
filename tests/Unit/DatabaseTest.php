@@ -90,11 +90,11 @@ final class DatabaseTest extends TestCase
         self::assertSame(2, $db->table('orders')->whereIn('status', ['paid'])->whereBetween('amount', 100, 250)->count());
         self::assertTrue($db->table('orders')->whereLike('status', 'pa%')->exists());
         self::assertSame(1, $db->table('orders')->whereNull('paid_at')->count());
-        self::assertSame(350.0, $db->table('orders')->where('status', '=', 'paid')->sum('amount'));
-        self::assertSame(175.0, $db->table('orders')->where('status', '=', 'paid')->avg('amount'));
+        self::assertSame(350.0, (float) $db->table('orders')->where('status', '=', 'paid')->sum('amount'));
+        self::assertSame(175.0, (float) $db->table('orders')->where('status', '=', 'paid')->avg('amount'));
         self::assertSame(75, (int) $db->table('orders')->min('amount'));
         self::assertSame(250, (int) $db->table('orders')->max('amount'));
-
+        
         $page = $db->table('orders')
             ->select(['id', 'status'])
             ->orderBy('id')
