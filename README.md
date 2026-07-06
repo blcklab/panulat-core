@@ -6,6 +6,7 @@
   </a>
   <img src="https://img.shields.io/github/license/blcklab/panulat-core?v=2" alt="license" />
 </p>
+
 # Panulat Core
 
 Panulat Core is the modular foundation of Panulat, a lightweight PHP framework for building clean REST APIs and API-first applications.
