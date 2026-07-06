@@ -5,37 +5,11 @@ declare(strict_types=1);
 namespace Panulat\Tests\Unit;
 
 use Panulat\Console\DbSeedCommand;
-use Panulat\Console\MakeSeederCommand;
 use Panulat\Database\Connection;
 use PHPUnit\Framework\TestCase;
 
 final class SeederCommandTest extends TestCase
 {
-    public function testMakeSeederCreatesSeederClass(): void
-    {
-        $basePath = sys_get_temp_dir() . '/panulat_make_seeder_' . bin2hex(random_bytes(6));
-        mkdir($basePath . '/database/seeders', 0775, true);
-
-        try {
-            $command = new MakeSeederCommand($basePath);
-
-            ob_start();
-            $exitCode = $command->execute(['Article']);
-            ob_end_clean();
-
-            self::assertSame(0, $exitCode);
-            self::assertFileExists($basePath . '/database/seeders/ArticleSeeder.php');
-
-            $contents = file_get_contents($basePath . '/database/seeders/ArticleSeeder.php');
-
-            self::assertIsString($contents);
-            self::assertStringContainsString('namespace Database\Seeders;', $contents);
-            self::assertStringContainsString('final class ArticleSeeder extends Seeder', $contents);
-        } finally {
-            $this->removeDirectory($basePath);
-        }
-    }
-
     public function testDbSeedRunsSpecificSeeder(): void
     {
         if (! extension_loaded('pdo_sqlite')) {

@@ -37,7 +37,11 @@
     "scripts": {
         "test": "phpunit",
         "stan": "phpstan analyse",
-        "cs-fix": "php-cs-fixer fix"
+        "cs-fix": "php-cs-fixer fix",
+        "check": [
+            "@stan",
+            "@test"
+        ]
     },
     "config": {
         "sort-packages": true,

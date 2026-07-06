@@ -35,14 +35,26 @@ final class Env
                 continue;
             }
 
-            if ((str_starts_with($value, '"') && str_ends_with($value, '"')) || (str_starts_with($value, "'") && str_ends_with($value, "'"))) {
+            if (
+                (str_starts_with($value, '"') && str_ends_with($value, '"')) ||
+                (str_starts_with($value, "'") && str_ends_with($value, "'"))
+            ) {
                 $value = substr($value, 1, -1);
             }
 
+            $existing = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
+
+            if ($existing !== false) {
+                $value = (string) $existing;
+            } else {
+                $_ENV[$key] = $value;
+                $_SERVER[$key] = $_SERVER[$key] ?? $value;
+                putenv($key . '=' . $value);
+            }
+
             $values[$key] = $value;
-            $_ENV[$key] = $value;
+            $_ENV[$key] = $_ENV[$key] ?? $value;
             $_SERVER[$key] = $_SERVER[$key] ?? $value;
-            putenv($key . '=' . $value);
         }
 
         return $values;

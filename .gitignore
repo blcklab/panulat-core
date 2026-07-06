@@ -3,3 +3,4 @@
 /.php-cs-fixer.cache
 .DS_Store
 Thumbs.db
+composer.final.json
