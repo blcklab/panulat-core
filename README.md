@@ -1,7 +1,7 @@
 <p align="left">
   <img src="https://img.shields.io/packagist/v/blcklab/panulat-core?style=flat-square" alt="Packagist version" />
   <img src="https://img.shields.io/packagist/dm/blcklab/panulat-core?style=flat-square" alt="downloads" />
-  <img src="https://github.com/blcklab/panulat-core/actions/workflows/test.yml/badge.svg" alt="tests" />
+  <img src="https://github.com/blcklab/panulat-core/actions/workflows/ci.yml/badge.svg" alt="tests" />
   <img src="https://img.shields.io/github/license/blcklab/panulat-core?style=flat-square" alt="license" />
 </p>
 
