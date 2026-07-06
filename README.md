@@ -10,11 +10,6 @@
 
 Panulat Core is the modular foundation of Panulat, a lightweight PHP framework for building clean REST APIs and API-first applications.
 
-<p align="center">
-  <em>Panulat</em> means "writing instrument" in Filipino.
-</p>
-
-
 ## Features
 
 * HTTP request and response handling
