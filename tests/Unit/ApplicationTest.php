@@ -5,19 +5,22 @@ declare(strict_types=1);
 namespace Panulat\Tests\Unit;
 
 use Panulat\Foundation\Application;
+use Panulat\Foundation\FrameworkServiceProvider;
 use Panulat\Http\Request;
 use Panulat\Http\Response;
 use PHPUnit\Framework\TestCase;
 
 final class ApplicationTest extends TestCase
 {
-    public function testControllersAreResolvedFreshPerRequest(): void
+   public function testControllersAreResolvedFreshPerRequest(): void
     {
         FreshController::$instances = 0;
         $basePath = $this->createBasePath();
 
         try {
             $app = new Application($basePath, ignoreCaches: true);
+            $app->register(new FrameworkServiceProvider($basePath));
+
             $app->router()->get('/fresh', [FreshController::class, 'show']);
 
             $request = Request::fromServer([
