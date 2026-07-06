@@ -4,7 +4,7 @@
   <a href="https://github.com/blcklab/panulat-core/actions/workflows/ci.yml">
     <img src="https://github.com/blcklab/panulat-core/actions/workflows/ci.yml/badge.svg" alt="CI" />
   </a>
-  <img src="https://img.shields.io/github/license/blcklab/panulat-core?style=flat-square" alt="license" />
+  <img src="https://img.shields.io/github/license/blcklab/panulat-core?v=2" alt="license" />
 </p>
 # Panulat Core
 
