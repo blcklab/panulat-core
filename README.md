@@ -1,28 +1,62 @@
+<p align="center">
+  <a href="https://packagist.org/packages/blcklab/panulat-core">
+    <img src="https://img.shields.io/packagist/v/blcklab/panulat-core?label=packagist" alt="Packagist Version">
+  </a>
+
+  <a href="https://packagist.org/packages/blcklab/panulat-core">
+    <img src="https://img.shields.io/packagist/php-v/blcklab/panulat-core" alt="PHP Version">
+  </a>
+
+  <a href="https://github.com/blcklab/panulat-core/actions/workflows/ci.yml">
+    <img src="https://github.com/blcklab/panulat-core/actions/workflows/ci.yml/badge.svg" alt="CI">
+  </a>
+
+  <a href="https://packagist.org/packages/blcklab/panulat-core">
+    <img src="https://img.shields.io/packagist/l/blcklab/panulat-core" alt="License">
+  </a>
+
+  <a href="https://packagist.org/packages/blcklab/panulat-core">
+    <img src="https://img.shields.io/packagist/dt/blcklab/panulat-core" alt="Total Downloads">
+  </a>
+</p>
+
 # Panulat Core
 
-Panulat Core is the modular framework core behind Panulat, a lightweight PHP 8.3+ framework for building REST APIs.
 
-It provides the essential pieces needed to build API applications while keeping the core small, focused, and easy to extend.
+<p align="center">
+  Panulat Core is the modular foundation of Panulat, a lightweight PHP framework for building clean REST APIs and API-first applications.
+</p>
+
+
+
+<p align="center">
+  <em>Panulat</em> means "writing instrument" in Filipino.
+</p>
+
 
 ## Features
 
 * HTTP request and response handling
-* Routing
+* Routing and route groups
 * Dependency injection container
 * Middleware pipeline
-* Application kernel
-* Config and environment loading
-* Error handling
-* Logging
-* Database connection and query builder
-* Base model support
+* Application kernel and service providers
+* Configuration and environment loading
+* Error handling with safe JSON responses
 * Validation
+* Database connection and query builder
+* Migrations and seeders
+* Lightweight model support
+* Cache contracts and local cache drivers
+* Rate limiting
+* CORS support
 * API-key middleware
-* CORS and rate limiting
 * Resources and pagination
-* Console command support
+* Console command foundation
+* File upload support
+* Health and readiness endpoints
 
-Optional features, such as JWT authentication, are available through separate packages instead of being bundled into the core.
+Optional features such as JWT authentication, developer scaffolding, Redis, queues, and OpenAPI support are provided through separate packages instead of being bundled into the core.
 
 ## Install
 
@@ -30,7 +64,7 @@ Optional features, such as JWT authentication, are available through separate pa
 composer require blcklab/panulat-core
 ```
 
-For new projects, start with the Panulat starter application:
+For new applications, use the Panulat starter project:
 
 ```bash
 composer create-project blcklab/panulat my-api
@@ -38,25 +72,21 @@ composer create-project blcklab/panulat my-api
 
 ## Requirements
 
-```json
-{
-  "require": {
-    "php": "^8.3",
-    "ext-json": "*",
-    "ext-pdo": "*"
-  }
-}
-```
-
-You will also need the PDO driver for your database, such as `pdo_mysql` or `pdo_sqlite`.
+* PHP 8.3 or higher
+* `ext-json`
+* `ext-pdo`
+* A PDO database driver such as `pdo_mysql` or `pdo_sqlite`
 
 ## Basic Usage
 
 ```php
 use Panulat\Foundation\Application;
+use Panulat\Foundation\FrameworkServiceProvider;
 use Panulat\Http\Response;
 
 $app = new Application(__DIR__);
+
+$app->register(new FrameworkServiceProvider(__DIR__));
 
 $app->router()->get('/health', function () {
     return Response::json([
@@ -66,6 +96,8 @@ $app->router()->get('/health', function () {
 
 $app->run();
 ```
+
+For full applications, the starter project includes the recommended structure, bootstrap files, configuration, routes, and development tooling.
 
 ## Routing
 
@@ -77,7 +109,7 @@ $router->put('/users/{id}', [UserController::class, 'update']);
 $router->delete('/users/{id}', [UserController::class, 'destroy']);
 ```
 
-You can also group routes with a shared prefix and middleware:
+Route groups can share prefixes and middleware:
 
 ```php
 $router->group('/v1', function ($router) {
@@ -103,7 +135,7 @@ $router->get('/users', [UserController::class, 'index'], [
 ]);
 ```
 
-Named throttles are supported as well:
+Named throttles are also supported:
 
 ```php
 $app->throttle('login', maxAttempts: 5, windowSeconds: 60);
@@ -113,18 +145,24 @@ $router->post('/auth/login', [AuthController::class, 'login'], [
 ]);
 ```
 
-## Requests
+## Query Builder
 
 ```php
-$request->json();          // decoded JSON body
-$request->body();          // raw request body
-$request->getParsedBody(); // form body
-$request->post('name');    // form value
-$request->query('page');   // query value
-$request->input('name');   // JSON, form, then query fallback
+$users = $db->table('users')
+    ->select(['id', 'name', 'email'])
+    ->whereNull('deleted_at')
+    ->orderBy('id', 'desc')
+    ->paginate(page: 1, perPage: 20);
 ```
 
-Request bodies are read lazily, so they are only loaded when needed.
+```php
+$userId = $db->table('users')->insertGetId([
+    'name' => 'Avelino',
+    'email' => 'avelino@example.test',
+]);
+```
+
+The query builder supports common API data operations, including filtering, pagination, inserts, updates, deletes, joins, aggregates, transactions, and raw queries with bindings.
 
 ## Responses
 
@@ -146,51 +184,9 @@ $file = $request->file('avatar');
 if ($request->hasFile('avatar')) {
     $file->moveTo(__DIR__ . '/storage/uploads/avatar.png');
 }
-
-$photos = $request->fileList('photos');
 ```
 
 Uploaded files are represented by `Panulat\Http\UploadedFile`.
-
-## Query Builder
-
-```php
-$users = $db->table('users')
-    ->select(['id', 'name', 'email'])
-    ->whereNull('deleted_at')
-    ->orderBy('id', 'desc')
-    ->paginate(page: 1, perPage: 20);
-```
-
-```php
-$userId = $db->table('users')->insertGetId([
-    'name' => 'Avelino',
-    'email' => 'avelino@example.test',
-]);
-```
-
-```php
-$total = $db->table('orders')
-    ->where('status', '=', 'paid')
-    ->sum('amount');
-```
-
-The query builder covers the common database operations needed for API development, including selecting, filtering, pagination, inserts, updates, deletes, joins, aggregates, transactions, and raw queries with bindings.
-
-## Helpers
-
-Panulat Core includes a small set of framework helpers:
-
-```php
-panulat_env('APP_NAME', 'Panulat API');
-panulat_bool('true');
-panulat_int('42');
-panulat_string(' Panulat ');
-panulat_path('storage/logs/app.log', $basePath);
-panulat_ascii('PANULAT API');
-```
-
-The core does not include application-level helpers such as `app()`, `request()`, `auth()`, `view()`, or session helpers.
 
 ## Production
 
@@ -209,27 +205,13 @@ composer install --no-dev --optimize-autoloader
 
 In production, errors are returned as safe JSON responses without stack traces.
 
-## Runtime Compatibility
-
-Panulat Core is PHP-FPM-first. It can also be used with long-running runtimes such as Swoole, RoadRunner, and FrankenPHP, as long as the application code is written safely.
-
-For long-running runtimes:
-
-* Keep controllers stateless
-* Keep singleton services stateless
-* Avoid storing request-specific data in shared objects
-* Create a fresh request object for each request
-
-## Optional Packages
-
-JWT authentication is available as a separate package:
-
-```bash
-composer require blcklab/panulat-jwt
-```
-
 ## Related Packages
 
-* `blcklab/panulat-core` — modular framework core
-* `blcklab/panulat` — starter project
+* `blcklab/panulat-core` — framework core
+* `blcklab/panulat` — starter API project
 * `blcklab/panulat-jwt` — optional JWT authentication package
+* `blcklab/panulat-cli` — optional developer CLI and scaffolding commands
+
+## License
+
+MIT

@@ -2,26 +2,26 @@
 
 ## Supported Versions
 
-Panulat currently supports the latest tagged `0.x` release line.
+Panulat currently supports the latest tagged release.
 
-Security fixes are applied to the latest available release unless noted otherwise.
+Because Panulat is still in early development, users are encouraged to upgrade to the latest available version for security fixes and improvements.
 
 ## Reporting a Vulnerability
 
-Please report suspected security vulnerabilities privately.
+Please report suspected security issues privately.
 
-Do not open a public GitHub issue that includes exploit details, sensitive logs, credentials, or reproduction steps that could put users at risk.
+Do not open a public GitHub issue with exploit details, sensitive logs, credentials, tokens, or reproduction steps that could put users at risk.
 
-To report a vulnerability, contact the project maintainer directly.
+To report a vulnerability, contact the maintainer directly.
 
-Please include as much detail as possible:
+Please include:
 
-* Affected package, such as `blcklab/panulat-core`, `blcklab/panulat`, or `blcklab/panulat-jwt`
+* Affected package, such as `blcklab/panulat-core`, `blcklab/panulat`, `blcklab/panulat-jwt`, or `blcklab/panulat-cli`
 * Affected version or commit
 * Clear reproduction steps
 * Expected and actual behavior
 * Potential impact
-* Suggested mitigation, if known
+* Suggested fix, if known
 
 ## Production Safety
 
@@ -35,20 +35,6 @@ APP_DEBUG=false
 Panulat is designed to avoid unsafe debug behavior in production.
 
 In production, errors are returned as safe JSON responses without stack traces.
-
-## Security Scope
-
-Security reports may include issues related to:
-
-* Request handling
-* Middleware behavior
-* Authentication or authorization primitives
-* API-key handling
-* CORS behavior
-* Rate limiting
-* Error rendering
-* Database query handling
-* File upload handling
 
 ## Responsible Disclosure
 

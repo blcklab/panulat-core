@@ -1,6 +1,6 @@
 {
     "name": "blcklab/panulat-core",
-    "description": "Panulat Core: lightweight zero-runtime-dependency PHP 8.3+ framework library for JSON REST APIs.",
+    "description": "A modular, lightweight PHP framework for building clean REST APIs and API-first applications.",
     "type": "library",
     "license": "MIT",
     "keywords": [
