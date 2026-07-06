@@ -1,10 +1,11 @@
 <p align="left">
   <img src="https://img.shields.io/packagist/v/blcklab/panulat-core?style=flat-square" alt="Packagist version" />
   <img src="https://img.shields.io/packagist/dm/blcklab/panulat-core?style=flat-square" alt="downloads" />
-  <img src="https://github.com/blcklab/panulat-core/actions/workflows/ci.yml/badge.svg" alt="tests" />
+  <a href="https://github.com/blcklab/panulat-core/actions/workflows/ci.yml">
+    <img src="https://github.com/blcklab/panulat-core/actions/workflows/ci.yml/badge.svg" alt="CI" />
+  </a>
   <img src="https://img.shields.io/github/license/blcklab/panulat-core?style=flat-square" alt="license" />
 </p>
-
 # Panulat Core
 
 Panulat Core is the modular foundation of Panulat, a lightweight PHP framework for building clean REST APIs and API-first applications.
