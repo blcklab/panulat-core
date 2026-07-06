@@ -4,7 +4,7 @@
 
 First public release of Panulat Core.
 
-Panulat Core provides the modular foundation for building lightweight PHP REST APIs. This release includes the core framework pieces needed to create structured, production-ready API applications.
+Panulat Core provides the modular foundation for building lightweight PHP REST APIs. This release includes the essential framework pieces needed to create structured, production-ready API applications while keeping the core small and focused.
 
 ### Added
 
@@ -13,7 +13,7 @@ Panulat Core provides the modular foundation for building lightweight PHP REST A
 * Middleware pipeline
 * Dependency injection container
 * Application kernel
-* Config and environment loading
+* Configuration and environment loading
 * Error handling
 * Validation
 * PDO database layer
@@ -26,7 +26,7 @@ Panulat Core provides the modular foundation for building lightweight PHP REST A
 * Resources and pagination
 * Cache support
 * Event support
-* Console commands
+* Console command foundation
 * Locale support
 * Lightweight framework helpers
 
@@ -49,7 +49,7 @@ Added support for common API request formats:
 * Multipart form uploads
 * Lightweight uploaded file objects
 
-Panulat Core supports file uploads without bundling a media library or storage abstraction, keeping the core modular and lightweight.
+Panulat Core supports file uploads without bundling a media library or storage abstraction, keeping uploads useful while preserving the lightweight core.
 
 ### Response Helpers
 
@@ -60,4 +60,6 @@ Added small response helpers for common API responses:
 
 ### Modular Packages
 
-JWT authentication is intentionally kept outside the core and is available through the optional `blcklab/panulat-jwt` package.
+JWT authentication is kept outside the core and is available through the optional `blcklab/panulat-jwt` package.
+
+Developer scaffolding commands are also kept outside the core and are available through the optional `blcklab/panulat-cli` package.
